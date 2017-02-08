@@ -1,7 +1,6 @@
 
 pipeline {
     agent any 
-    GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
     stages {
         stage('Gradle build') { 
             steps { 
@@ -26,18 +25,13 @@ pipeline {
             }
         }
         stage('Sanity check') {
-        when {
-                expression { return GIT_BRANCH.equals("master") }
-            }
              steps {
+                 sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
                  input "Does the staging environment for ${env.APP_NAME} look ok?"
              }
          }
 
          stage('Deploy - Production') {
-             when {
-               expression { return GIT_BRANCH.equals("master") }
-            }
              steps {
                  sh 'echo deploying $APP_NAME to production'
              }             

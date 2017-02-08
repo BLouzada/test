@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Sanity check') {
              steps {
-                sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                echo BRANCH_NAME
                 input "Does the staging environment for ${env.APP_NAME} look ok?"
              }
          }

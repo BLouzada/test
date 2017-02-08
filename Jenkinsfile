@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Gradle build') { 
             steps { 
-                sh './gradlew clean build -X test'
+                sh './gradlew clean build -x test'
             }
         }
         stage('Testes') { 

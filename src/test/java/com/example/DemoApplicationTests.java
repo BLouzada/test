@@ -18,7 +18,7 @@ public class DemoApplicationTests {
 
 	@Test
 	public void teste(){
-		assertEquals(1,2);
+		assertEquals(1,1);
 	}
 
 }

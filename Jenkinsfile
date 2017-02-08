@@ -38,7 +38,7 @@ pipeline {
          stage('Deploy - Production') {
              when {
                 expression {
-                    BRANCH_NAME = master
+                    BRANCH_NAME == 'master'
                 }
             }
              steps {

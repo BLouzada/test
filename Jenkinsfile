@@ -9,9 +9,15 @@ pipeline {
         }
         stage('Testes') { 
             steps { 
-                sh './gradlew test'
-                echo 'ola mundo'
-            }
+                parallel (
+                    "Test" : {
+                        sh './gradlew test'
+                    },
+                    "Echo" : {
+                        echo 'ola mundo'
+                    }
+                }
+            )
         }
     }
 }

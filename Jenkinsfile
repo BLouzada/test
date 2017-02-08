@@ -21,19 +21,26 @@ pipeline {
         }
         stage('Deploy to testes') { 
             steps { 
-                        sh 'cp build/libs/demo-0.0.1-SNAPSHOT.jar .'
+                sh 'cp build/libs/demo-0.0.1-SNAPSHOT.jar .'
             }
         }
         stage('Sanity check') {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
              steps {
-                 input "Does the staging environment for ${env.APP_NAME} look ok?"
+                input "Does the staging environment for ${env.APP_NAME} look ok?"
              }
          }
 
          stage('Deploy - Production') {
-             agent {
-                 label 'master'
-             }
+             when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
              steps {
                  sh 'echo deploying $APP_NAME to production'
              }             

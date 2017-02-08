@@ -16,8 +16,8 @@ pipeline {
                     "Echo" : {
                         echo 'ola mundo'
                     }
-                }
-            )
+                )
+            }
         }
     }
 }

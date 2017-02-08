@@ -24,5 +24,18 @@ pipeline {
                         sh 'cp build/libs/demo-0.0.1-SNAPSHOT.jar .'
             }
         }
+        stage('Sanity check') {
+             steps {
+                 input "Does the staging environment for ${env.APP_NAME} look ok?"
+             }
+         }
+         stage('Deploy - Production') {
+             agent {
+                 label 'master'
+             }
+             steps {
+                 sh 'echo deploying $APP_NAME to production'
+             }             
+         }
     }
 }

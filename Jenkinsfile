@@ -11,6 +11,9 @@ pipeline {
             steps { 
                 sh './gradlew test'
             }
+            steps { 
+                echo 'ola mundo'
+            }
         }
     }
 }

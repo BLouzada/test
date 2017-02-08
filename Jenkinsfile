@@ -10,8 +10,6 @@ pipeline {
         stage('Testes') { 
             steps { 
                 sh './gradlew test'
-            }
-            steps { 
                 echo 'ola mundo'
             }
         }

@@ -1,7 +1,10 @@
 
 pipeline {
     agent any
-    def server = Artifactory.newServer url: 'https://testpipeline.jfrog.io/testpipeline/generic-local/', username: 'admin', password: 'B8JSot6yTh'
+    node {
+        def server = Artifactory.newServer url: 'https://testpipeline.jfrog.io/testpipeline/generic-local/', username: 'admin', password: 'B8JSot6yTh'  
+    }
+    
 
     stages {
         stage('Gradle build') { 
@@ -23,15 +26,17 @@ pipeline {
         }
         stage('Deploy to testes') { 
             steps { 
-            def uploadSpec = """{
-              "files": [
-                {
-                  "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
-                  "target": ""
+                node {
+                    def uploadSpec = """{
+                      "files": [
+                        {
+                          "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
+                          "target": ""
+                        }
+                     ]
+                    }"""
+                    server.upload(uploadSpec)
                 }
-             ]
-            }"""
-                server.upload(uploadSpec)
             }
         }
         stage('Sanity check') {

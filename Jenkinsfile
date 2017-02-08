@@ -25,13 +25,22 @@ pipeline {
             }
         }
         stage('Sanity check') {
+            when {
+                expression {
+                    BRANCH_NAME = master
+                }
+            }
              steps {
-                echo BRANCH_NAME
                 input "Does the staging environment for ${env.APP_NAME} look ok?"
              }
          }
 
          stage('Deploy - Production') {
+             when {
+                expression {
+                    BRANCH_NAME = master
+                }
+            }
              steps {
                  sh 'echo deploying $APP_NAME to production'
              }             

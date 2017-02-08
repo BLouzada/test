@@ -1,6 +1,6 @@
 
 node {
-    agent any
+    def server = Artifactory.newServer url: 'https://testpipeline.jfrog.io/testpipeline/generic-local/', username: 'admin', password: 'B8JSot6yTh'  
     stages {
         stage('Gradle build') { 
             steps { 

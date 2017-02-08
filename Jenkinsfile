@@ -7,7 +7,7 @@ pipeline {
                 sh './gradlew clean build -x test'
             }
         }
-        stage('Testes') { 
+        stage('Run tests') { 
             steps { 
                 parallel (
                     "Test" : {
@@ -17,6 +17,13 @@ pipeline {
                         echo 'ola mundo'
                     }
                 )
+            }
+        }
+        stage('Deploy to testes') { 
+            steps { 
+                    "Copy to testes " : {
+                        sh 'cp build/libs/demo-0.0.1-SNAPSHOT.jar .'
+                    }
             }
         }
     }

@@ -8,13 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class DemoApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+public class DemoApplicationTests {
 
 	@Test
 	public void teste(){

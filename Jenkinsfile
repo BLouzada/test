@@ -21,19 +21,22 @@ pipeline {
         }
         stage('Deploy to testes') { 
             steps { 
-                        sh 'cp build/libs/demo-0.0.1-SNAPSHOT.jar .'
+                sh 'cp build/libs/demo-0.0.1-SNAPSHOT.jar .'
             }
         }
         stage('Sanity check') {
+        when {
+               branch "master"
+            }
              steps {
                  input "Does the staging environment for ${env.APP_NAME} look ok?"
              }
          }
 
          stage('Deploy - Production') {
-             agent {
-                 label 'master'
-             }
+             when {
+               branch "master"
+            }
              steps {
                  sh 'echo deploying $APP_NAME to production'
              }             

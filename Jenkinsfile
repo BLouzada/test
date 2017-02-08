@@ -27,7 +27,7 @@ pipeline {
         stage('Sanity check') {
             when {
                 expression {
-                    BRANCH_NAME = master
+                    BRANCH_NAME = 'master'
                 }
             }
              steps {

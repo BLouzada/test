@@ -25,7 +25,8 @@ pipeline {
             }
         }
         stage('Deploy - Production') {
-        when {
+        steps{
+            when {
                branch "master"
             }
         stage('Sanity check') {
@@ -38,6 +39,7 @@ pipeline {
                  sh 'echo deploying $APP_NAME to production'
              }             
          }
+        }
         }
     }
 }

@@ -18,7 +18,6 @@ pipeline {
                         echo ${BUILD_URL}
                     }
                 )
-              step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
             }
         }
         stage('Deploy to testes') { 

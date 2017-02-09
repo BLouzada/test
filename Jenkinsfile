@@ -14,8 +14,8 @@ pipeline {
                         sh './gradlew test'
                     },
                     "Echo" : {
-                        echo '$BUILD_URL'
-                        echo '${BUILD_URL}'
+                        echo '$env.BUILD_URL'
+                        echo '${env.BUILD_URL}'
                     }
                 )
             }

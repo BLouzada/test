@@ -21,7 +21,7 @@ pipeline {
         }
         stage ('Save test results') {
             steps {
-              step([$class: 'JUnitResultArchiver', testResults: 'build/reports/tests/index.html'])
+              step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/TEST-*.xml'])
             }
         }
         stage('Deploy to testes') { 

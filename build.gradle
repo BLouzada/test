@@ -24,6 +24,11 @@ sourceCompatibility = 1.8
 repositories {
 	mavenCentral()
 }
+test {
+	testLogging {
+		exceptionFormat = 'full'
+	}
+}
 
 
 dependencies {

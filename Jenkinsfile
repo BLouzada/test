@@ -45,7 +45,7 @@ pipeline {
                 expression {
                     BRANCH_NAME == 'master'
                 }
-            }
+            }node {
              steps {
              step (def server = Artifactory.server 'jfrog'
              def uploadSpec = """{
@@ -57,6 +57,7 @@ pipeline {
                  ]
                 }"""
                 server.upload(uploadSpec))
+                }
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])
              }
          }

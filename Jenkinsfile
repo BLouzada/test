@@ -59,11 +59,8 @@ pipeline {
     }
     post {
         always {
-        stage ('Save test results') {
-            steps {
               step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/TEST-*.xml'])
             }
-        }
         }
     }
 }

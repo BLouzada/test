@@ -2,7 +2,6 @@
 pipeline {
     agent any
     environment {
-        def server = Artifactory.server 'jfrog'
              def uploadSpec = """{
                   "files": [
                     {
@@ -54,7 +53,7 @@ pipeline {
             }
              steps {
              script {
-             
+                def server = Artifactory.server 'jfrog'
                 server.upload(uploadSpec)
                 }
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])

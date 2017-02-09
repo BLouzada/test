@@ -36,7 +36,7 @@ pipeline {
                 }
             }
              steps {
-                input "Does the staging environment for ${env.APP_NAME} look ok?"
+                input "Does the staging environment for ${APP_NAME} look ok?"
              }
          }
 

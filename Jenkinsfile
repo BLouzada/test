@@ -45,7 +45,7 @@ pipeline {
                 expression {
                     BRANCH_NAME == 'master'
                 }
-            }node {
+            }
              steps {
              script {def server = Artifactory.server 'jfrog'
              def uploadSpec = """{

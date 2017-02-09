@@ -14,10 +14,14 @@ pipeline {
                         sh './gradlew test'
                     },
                     "Echo" : {
-                        sh '$env.BUILD_URL'
-                        sh '$env.CLASSPATH'
+                        echo 'ola mundo'
                     }
                 )
+            }
+        }
+        stage ('Save test results') {
+            steps {
+              step([$class: 'JUnitResultArchiver', testResults: 'build/reports/tests/index.html'])
             }
         }
         stage('Deploy to testes') { 

@@ -56,7 +56,7 @@ pipeline {
                     }
                  ]
                 }"""
-                server.upload(uploadSpec))
+                server.upload(uploadSpec)
                 }
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])
              }

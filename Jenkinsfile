@@ -14,9 +14,11 @@ pipeline {
                         sh './gradlew test'
                     },
                     "Echo" : {
-                        echo 'ola mundo'
+                        echo $BUILD_URL
+                        echo ${BUILD_URL}
                     }
                 )
+              step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
             }
         }
         stage('Deploy to testes') { 

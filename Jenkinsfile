@@ -15,7 +15,7 @@ pipeline {
                     },
                     "Echo" : {
                         sh '$env.BUILD_URL'
-                        sh '${env.BUILD_URL}'
+                        sh '$env.CLASSPATH'
                     }
                 )
             }

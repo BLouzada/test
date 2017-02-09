@@ -15,7 +15,7 @@ pipeline {
                     },
                     "Echo" : {
                         echo '$BUILD_URL'
-                        echo '${BUILD_URL}''
+                        echo '${BUILD_URL}'
                     }
                 )
             }

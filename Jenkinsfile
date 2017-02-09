@@ -47,7 +47,7 @@ pipeline {
                 }
             }node {
              steps {
-             step (def server = Artifactory.server 'jfrog'
+             script {def server = Artifactory.server 'jfrog'
              def uploadSpec = """{
                   "files": [
                     {

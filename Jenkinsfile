@@ -4,14 +4,14 @@ pipeline {
     stages {
         stage('Gradle build') { 
             steps { 
-//                sh './gradlew clean build -x test'
+                sh './gradlew clean build -x test'
             }
         }
         stage('Run tests') { 
             steps { 
                 parallel (
                     "Test" : {
-//                        sh './gradlew test'
+                        sh './gradlew test'
                     },
                     "Echo" : {
                         echo 'ola mundo'
@@ -43,7 +43,7 @@ pipeline {
             }
              steps {
              script {def server = Artifactory.server 'jfrog'
-/*             def uploadSpec = """{
+             def uploadSpec = """{
                   "files": [
                     {
                       "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
@@ -52,7 +52,7 @@ pipeline {
                  ]
                 }"""
                 server.upload(uploadSpec)
-                }*/
+                }
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])
              }
          }

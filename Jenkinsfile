@@ -19,11 +19,6 @@ pipeline {
                 )
             }
         }
-        stage ('Save test results') {
-            steps {
-              step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/TEST-*.xml'])
-            }
-        }
         stage('Deploy to testes') { 
             steps { 
                 echo 'deploy to test'
@@ -61,5 +56,14 @@ pipeline {
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])
              }
          }
+    }
+    post {
+        always {
+        stage ('Save test results') {
+            steps {
+              step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/TEST-*.xml'])
+            }
+        }
+        }
     }
 }

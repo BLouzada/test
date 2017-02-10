@@ -31,7 +31,9 @@ pipeline {
                 }
             }
              steps {
+                milestone()
                 input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin', submitterParameter: 'test'
+                milestone()
              }
          }
 

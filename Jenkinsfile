@@ -33,7 +33,7 @@ pipeline {
              steps {
                 input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin', submitterParameter: 'test'
                 milestone()
-                node {
+                node('master') {
                   echo "Deploying"
                   script {
                 def server = Artifactory.server 'jfrog'

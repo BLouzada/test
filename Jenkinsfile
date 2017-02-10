@@ -31,7 +31,7 @@ pipeline {
                 }
             }
              steps {
-                input "Does the staging environment for ${env.JOB_NAME} look ok?" submitter: "admin"
+                input "Does the staging environment for ${env.JOB_NAME} look ok?" submitter "admin"
              }
          }
 

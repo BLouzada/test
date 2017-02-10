@@ -32,10 +32,17 @@ pipeline {
             }
              steps {
                 input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin', submitterParameter: 'test'
-                milestone()
-                node('master') {
-                  echo "Deploying"
-                  script {
+             }
+         }
+
+         stage('Deploy - Production') {
+             when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
+             steps {
+             script {
                 def server = Artifactory.server 'jfrog'
                 def uploadSpec = """{
                   "files": [
@@ -48,10 +55,9 @@ pipeline {
                 server.upload(uploadSpec)
                 }
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])
-                }
-                }
              }
          }
+    }
     post {
         always {
               step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/TEST-*.xml'])

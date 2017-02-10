@@ -1,16 +1,6 @@
 
 pipeline {
     agent any
-    environment {
-             def uploadSpec = """{
-                  "files": [
-                    {
-                      "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
-                      "target": "build"
-                    }
-                 ]
-                }"""
-    }
     stages {
         stage('Gradle build') { 
             steps { 
@@ -54,6 +44,14 @@ pipeline {
              steps {
              script {
                 def server = Artifactory.server 'jfrog'
+                def uploadSpec = """{
+                  "files": [
+                    {
+                      "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
+                      "target": "build"
+                    }
+                 ]
+                }"""
                 server.upload(uploadSpec)
                 }
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])

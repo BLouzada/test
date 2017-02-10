@@ -1,13 +1,15 @@
 
 pipeline {
-    agent any
+    agent none
     stages {
         stage('Gradle build') { 
+            agent { label 'master' }
             steps { 
                 sh './gradlew clean build -x test'
             }
         }
         stage('Run tests') { 
+        agent { label 'master' }
             steps { 
                 parallel (
                     "Test" : {
@@ -20,11 +22,13 @@ pipeline {
             }
         }
         stage('Deploy to testes') { 
+        agent { label 'master' }
             steps { 
                 echo 'deploy to test'
             }
         }
         stage('Sanity check') {
+        agent none
             when {
                 expression {
                     BRANCH_NAME == 'master'
@@ -36,6 +40,7 @@ pipeline {
          }
 
          stage('Deploy - Production') {
+         agent { label 'master' }
              when {
                 expression {
                     BRANCH_NAME == 'master'
@@ -58,9 +63,9 @@ pipeline {
              }
          }
     }
-    post {
+    /*post {
         always {
               step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/TEST-*.xml'])
             }
-        }
+        }*/
 }

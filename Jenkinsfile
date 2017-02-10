@@ -31,7 +31,7 @@ pipeline {
                 }
             }
              steps {
-                input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin,gambeiro'
+                input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin', submitterParameter: 'test'
              }
          }
 

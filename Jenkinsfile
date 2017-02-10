@@ -25,22 +25,12 @@ pipeline {
             }
         }
         stage('Sanity check') {
-            when {
-                expression {
-                    BRANCH_NAME == 'master'
-                }
-            }
              steps {
                 input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin', submitterParameter: 'test'
              }
          }
 
          stage('Deploy - Production') {
-             when {
-                expression {
-                    BRANCH_NAME == 'master'
-                }
-            }
              steps {
              script {
                 def server = Artifactory.server 'jfrog'

@@ -1,6 +1,6 @@
 
 pipeline {
-    agent any 
+    agent any
     stages {
         stage('Gradle build') { 
             steps { 
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Deploy to testes') { 
             steps { 
-                sh 'cp build/libs/demo-0.0.1-SNAPSHOT.jar .'
+                echo 'deploy to test'
             }
         }
         stage('Sanity check') {
@@ -31,7 +31,7 @@ pipeline {
                 }
             }
              steps {
-                input "Does the staging environment for ${env.APP_NAME} look ok?"
+                input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin', submitterParameter: 'test'
              }
          }
 
@@ -42,8 +42,25 @@ pipeline {
                 }
             }
              steps {
-                 sh 'echo deploying $APP_NAME to production'
-             }             
+             script {
+                def server = Artifactory.server 'jfrog'
+                def uploadSpec = """{
+                  "files": [
+                    {
+                      "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
+                      "target": "build"
+                    }
+                 ]
+                }"""
+                server.upload(uploadSpec)
+                }
+               step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])
+             }
          }
     }
+    post {
+        always {
+              step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/TEST-*.xml'])
+            }
+        }
 }

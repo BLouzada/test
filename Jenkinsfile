@@ -31,32 +31,24 @@ pipeline {
                 }
             }
              steps {
-                milestone()
                 input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'admin', submitterParameter: 'test'
                 milestone()
-             }
-         }
-
-         stage('Deploy - Production') {
-             when {
-                expression {
-                    BRANCH_NAME == 'master'
-                }
-            }
-             steps {
-             script {
-                def server = Artifactory.server 'jfrog'
-                def uploadSpec = """{
-                  "files": [
-                    {
-                      "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
-                      "target": "build"
-                    }
-                 ]
-                }"""
-                server.upload(uploadSpec)
-                }
+                node {
+                  echo "Deploying"
+                  script {
+                    def server = Artifactory.server 'jfrog'
+                    def uploadSpec = """{
+                      "files": [
+                        {
+                          "pattern": "build/libs/demo-0.0.1-SNAPSHOT.jar",
+                          "target": "build"
+                        }
+                     ]
+                    }"""
+                    server.upload(uploadSpec)
+                  }
                step([$class: 'ArtifactArchiver', artifacts: 'build/libs/demo-0.0.1-SNAPSHOT.jar', fingerprint: true])
+                }
              }
          }
     }

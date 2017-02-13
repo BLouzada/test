@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Sanity check') {
              steps {
-                input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'gambeiro', submitterParameter: 'parm'
+                input message: 'Does the staging environment for ${env.JOB_NAME} look ok?', submitter: 'job-creator', submitterParameter: 'parm'
              }
          }
 
